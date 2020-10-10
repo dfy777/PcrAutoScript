@@ -1,14 +1,15 @@
 import cv2
 import os
 
+SIMULATOR_RESOLUTION = [1280, 720]
+
 '''
 显示matchtemplate匹配区在原图上的位置
 '''
-def ShowImageMatchPoint(img, tmp_shape, left_upper_loc):
-    img_y, img_x = img.shape[:2]
-    tmp_y, tmp_x = tmp_shape[:2]
-
-    px, py = left_upper_loc[:2]
+def ShowImageMatchPoint(img, location):
+    img_x, img_y = SIMULATOR_RESOLUTION[:2]
+    
+    px, py, tmp_x, tmp_y = location[:4]
 
     if (py + tmp_y > img_y):
         tmp_y = img_y - py
