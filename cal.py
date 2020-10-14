@@ -1,3 +1,4 @@
+#-*- coding: UTF-8-*-
 import cv2
 import test
 import os
@@ -142,4 +143,3 @@ def ScreenShot(name="screencap"):
     os.system(cmd_cap)
     os.system(cmd_pull)
     time.sleep(GetRandomTime(DELAY*2))
-    

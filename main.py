@@ -1,8 +1,11 @@
-import cal
 import time
+import os
+
+import cal
+import connect as cn
 import jsonos as jsos
 import progress as pg
-import random
+
 '''
 time.sleep(3)
 
@@ -23,10 +26,18 @@ cal.ClickByTemplate('fanhui')
 
 if __name__ == "__main__":
     #cal.InitializeProgress()
-    time.sleep(2)
-    #pg.PjjcMainPageScript()
-    pg.Start()
-    #lis = pg.PjjcTeamConfigScript()
-    #lis = [(72, 103, 110, 28), (241, 103, 94, 28), (405, 104, 86, 28), (1102, 194, 107, 28)]
-    #pg.PjjcChangeTeamScript(lis)
-    #cal.ScreenShot("test")
+    #time.sleep(2)
+    #pg.Start()
+    active = True
+    while active:
+        print("请输入指令")
+        print("start开始脚本\nquit结束脚本")
+        msg = input()
+        if msg == "start":
+            if (cn.ConnectSimulator()):
+                pg.Start()
+        elif msg == "quit":
+            active = False
+
+        print("=======================")
+    
