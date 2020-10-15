@@ -5,8 +5,15 @@ import subprocess as subp
 import myexcept as myex
 import chardet
 
-ADB_SERVER = "adb_server"
-SIMU_NAME = "mumu"
+from configparser import ConfigParser
+
+cf = ConfigParser()
+cf.read('config.ini', encoding='utf-8')
+cf_map = dict(cf.items('connect'))
+
+
+ADB_SERVER = cf_map['adbserver']
+SIMU_NAME = cf_map['simuname']
 simulator_port = {
     "mumu":7555
 }

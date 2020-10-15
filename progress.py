@@ -1,12 +1,16 @@
 import cal
 import time
 import jsonos as jsos
+from configparser import ConfigParser
 
-IS_MATCH_IMAGE_BYLOC = False
-IS_RECORD_LOC = False
-TEAM_NUM = 3
-DELAY = [0.3, 0.5, 0.75, 1, 1.5, 2]
+cf = ConfigParser()
+cf.read('config.ini',encoding='utf-8')
+cf_map = dict(cf.items('progress'))
 
+IS_MATCH_IMAGE_BYLOC = cf_map['ismatchimagebyloc'] != "false"
+IS_RECORD_LOC = cf_map['isrecordloc'] != "false"
+TEAM_NUM = int(cf_map['teamnum'])
+DELAY = list(cf_map['delaylist'].replace(' ', '').split(","))
 
 def InitializeProgress():
     '''

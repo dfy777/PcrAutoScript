@@ -5,9 +5,16 @@ import os
 import random
 import time
 
-BORDER_PIXCEL = 5
-DELAY = 0.3
-DEFAULT_NAME = "screencap"
+from configparser import ConfigParser
+
+cf = ConfigParser()
+cf.read('config.ini', encoding='utf-8')
+cf_map = dict(cf.items('cal'))
+
+BORDER_PIXCEL = int(cf_map['borderpixel'])
+DELAY = float(cf_map['delay'])
+DEFAULT_NAME = cf_map['defaultname']
+
 nameDic = {
     "avator-cancel":"avator-cancel",
     "pjjc-team-config":"pjjc-team-config-1",
