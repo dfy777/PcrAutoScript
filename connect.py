@@ -11,11 +11,15 @@ cf = ConfigParser()
 cf.read('config.ini', encoding='utf-8')
 cf_map = dict(cf.items('connect'))
 
-
 ADB_SERVER = cf_map['adbserver']
 SIMU_NAME = cf_map['simuname']
 simulator_port = {
-    "mumu":7555
+    "mumu":7555,
+    "xiaoyao":21503,
+    "yeshen":62001,
+    "haima":26944,
+    "bluestacks":5555,
+    "leidian":5555
 }
 
 def ConnectSimulator():
@@ -25,6 +29,7 @@ def ConnectSimulator():
         #print(output)
 
         if (output.find("List of devices attached") == -1):
+            print(output)
             raise myex.UnfindAdbException("未找到adb程序")
 
         result = subp.Popen("{} connect 127.0.0.1:{}".format(ADB_SERVER, 
@@ -37,7 +42,8 @@ def ConnectSimulator():
         #output = out.decode(encoding='utf-8')
         #print(output)
 
-        if (output.find("cannot connect")):
+        if (output.find("cannot connect") >= 0):
+            print(output)
             raise myex.UnfindSimulatorException("未找到模拟器")
 
         result = subp.Popen("{} devices".format(ADB_SERVER), shell=True, stdout=subp.PIPE)

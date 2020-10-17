@@ -32,7 +32,8 @@ nameDic = {
     "myteam-3":"myteam-3",
     "myteam-guanbi":"myteam-guanbi",
     "bianzuwancheng":"bianzuwancheng",
-    "hujiao":"hujiao",
+    "hujiao-1":"hujiao",
+    "hujiao-2":"hujiao",
     "fangyusheding":"fangyusheding",
     "shengxu":"shengxu",
     "jiangxu":"jiangxu",
@@ -101,8 +102,7 @@ def GetLocationByImageMatch_Mul(img, template, testshow=False):
 
 
 def GetRandomTime(const, delay=0):
-    const = const + random.random() * delay
-    return const
+    return const + random.random() * delay
 
 
 def GetRandomList(rd_list):
@@ -149,4 +149,5 @@ def ScreenShot(name="screencap"):
 
     os.system(cmd_cap)
     os.system(cmd_pull)
-    time.sleep(GetRandomTime(DELAY*2))
+    it = GetRandomTime(DELAY*3)
+    time.sleep(it)
