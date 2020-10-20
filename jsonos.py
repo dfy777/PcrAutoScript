@@ -13,6 +13,7 @@ def ReadJson(name=False):
 
 
 def WriteJson(name, location):
+    #print(location)
     ptx, pty, inc_x, inc_y = location[:4]
     js_dict = {}
     with open(LOCATION_JSON_PATH, 'r') as load_f:
@@ -20,6 +21,18 @@ def WriteJson(name, location):
     
     js_dict[name] = (ptx, pty, inc_x, inc_y)
     
+    with open(LOCATION_JSON_PATH, 'w') as write_f:
+        json.dump(js_dict, write_f, indent=4, separators=[',', ':'])
+
+
+def WriteJsonDict(loc_dic):
+    js_dict = {}
+    with open(LOCATION_JSON_PATH, 'r') as load_f:
+        js_dict = json.load(load_f)
+    for name in loc_dic:
+        ptx, pty, inc_x, inc_y = loc_dic[name]
+        js_dict[name] = (ptx, pty, inc_x, inc_y)
+
     with open(LOCATION_JSON_PATH, 'w') as write_f:
         json.dump(js_dict, write_f, indent=4, separators=[',', ':'])
 
