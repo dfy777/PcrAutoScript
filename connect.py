@@ -24,33 +24,43 @@ simulator_port = {
 
 def ConnectSimulator():
     try:
+
+        #input adb command
         result = subp.Popen("{} devices".format(ADB_SERVER), shell=True, stdout=subp.PIPE)
         output = result.stdout.read().decode('utf-8')
         #print(output)
 
+        #if not found text wanted
         if (output.find("List of devices attached") == -1):
             print(output)
             raise myex.UnfindAdbException("未找到adb程序")
-
-        result = subp.Popen("{} connect 127.0.0.1:{}".format(ADB_SERVER, 
-                        simulator_port[SIMU_NAME]), shell=True, stdout=subp.PIPE)
         
-        output = result.stdout.read().decode('utf-8')
-        #print(output)
-        #out, err = result.communicate(timeout=5)
-        #print(out)
-        #output = out.decode(encoding='utf-8')
-        #print(output)
-
-        if (output.find("cannot connect") >= 0):
-            print(output)
-            raise myex.UnfindSimulatorException("未找到模拟器")
-
-        result = subp.Popen("{} devices".format(ADB_SERVER), shell=True, stdout=subp.PIPE)
-        output = result.stdout.read().decode('utf-8')
-
+        #checkout it has already connect or not
+        #if not, input connect command
         if (output.find("127.0.0.1") == -1):
-            raise myex.ConnectException("连接失败")
+            result = subp.Popen("{} connect 127.0.0.1:{}".format(ADB_SERVER, 
+                                simulator_port[SIMU_NAME]), shell=True, stdout=subp.PIPE)
+            output = result.stdout.read().decode('utf-8')
+
+            #print(output)
+            #out, err = result.communicate(timeout=5)
+            #print(out)
+            #output = out.decode(encoding='utf-8')
+            #print(output)
+            
+            #if can not find simulator
+            if (output.find("cannot connect") >= 0):
+                print(output)
+                raise myex.UnfindSimulatorException("未找到模拟器")
+                
+            #checkout connect condition
+            result = subp.Popen("{} devices".format(ADB_SERVER), shell=True, stdout=subp.PIPE)
+            output = result.stdout.read().decode('utf-8')
+
+            #if still not connect
+            if (output.find("127.0.0.1") == -1):
+                print(output)
+                raise myex.ConnectException("连接失败")
         
         return True
 

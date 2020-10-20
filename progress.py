@@ -66,22 +66,12 @@ def PjjcTeamConfigScript():
         team_lis[3] = js_dict[cal.nameDic["wodeduiwu"]]
         team_lis[4] = js_dict[cal.nameDic["bianzuwancheng"]]
 
-        if ((team_lis[0][0] == -1)
+
+    if ((team_lis[0][0] == -1)
                 or (team_lis[1][0] == -1)
                 or (team_lis[2][0] == -1) 
                 or (team_lis[3][0] == -1)
                 or (team_lis[4][0] == -1)):
-            team_lis[0] = False
-            team_lis[1] = False
-            team_lis[2] = False
-            team_lis[3] = False
-            team_lis[4] = False
-
-    if ((team_lis[0] == False)
-            or (team_lis[1] == False)
-            or (team_lis[2] == False) 
-            or (team_lis[3] == False)
-            or (team_lis[4] == False) ):
         cal.ScreenShot(cal.DEFAULT_NAME)
         
         team_lis[0] = cal.GetLocationByImageName(cal.DEFAULT_NAME,
@@ -106,7 +96,7 @@ def PjjcTeamConfigScript():
     #cancel already exists avators
     for page in range(3):
         for index in range(5):
-            cal.ClickInRandomArea(avator_loc, 0.2, 0.1)
+            cal.ClickInRandomArea(avator_loc, 0.1, 0.1)
 
         if (page == 0):
             cal.ClickInRandomArea(team_lis[1],DELAY[0], DELAY[0])
@@ -131,33 +121,18 @@ def PjjcChangeTeamScript(team_lis_loc):
         myteam_lis[0] = js_dict[cal.nameDic["myteam-1"]]
         myteam_lis[1] = js_dict[cal.nameDic["myteam-2"]]
         myteam_lis[2] = js_dict[cal.nameDic["myteam-3"]]
-        hujiao_lis[0] = js_dict[cal.nameDic["hujiao-1"]]
-        hujiao_lis[1] = js_dict[cal.nameDic["hujiao-2"]]
+        hujiao_lis[0] = js_dict["hujiao-1"]
+        hujiao_lis[1] = js_dict["hujiao-2"]
         shengxu_loc = js_dict[cal.nameDic["shengxu"]]
         myteam_guanbi = js_dict[cal.nameDic["myteam-guanbi"]]
-        
-        if ((myteam_lis[0][0] == -1)
+    
+    if ((myteam_lis[0][0] == -1)
                 or (myteam_lis[1][0] == -1)
                 or (myteam_lis[2][0] == -1)
                 or (hujiao_lis[0][0] == -1)
                 or (hujiao_lis[1][0]) == -1
                 or (shengxu_loc[0] == -1)
                 or (myteam_guanbi[0] == -1)):
-            myteam_lis[0] = False
-            myteam_lis[1] = False
-            myteam_lis[2] = False
-            hujiao_lis[0] = False
-            hujiao_lis[1] = False
-            shengxu_loc = False
-            myteam_guanbi = False
-    
-    if ((myteam_lis[0] == False)
-            or (myteam_lis[1] == False)
-            or (myteam_lis[2] == False)
-            or (hujiao_lis[0] == False)
-            or (hujiao_lis[1] == False)
-            or (shengxu_loc == False)
-            or (myteam_guanbi == False) ):
         cal.ScreenShot(cal.DEFAULT_NAME)
 
         myteam_lis[0] = cal.GetLocationByImageName(cal.DEFAULT_NAME,
@@ -181,12 +156,11 @@ def PjjcChangeTeamScript(team_lis_loc):
             point_dic["hujiao-1"] = hujiao_lis[0]
             point_dic["hujiao-2"] = hujiao_lis[1]
             point_dic[cal.nameDic["myteam-guanbi"]] = myteam_guanbi
-            print(point_dic)
             jsos.WriteJsonDict(point_dic)
 
     team_randomlis = cal.GetRandomList( [1, 2, 3] )
     #myteam_loc = myteam_lis[cal.GetRadomInt(3)]
-    myteam_loc = myteam_lis[1]
+    myteam_loc = myteam_lis[cal.GetRadomInt(3)]
     team_index = 1
 
 
@@ -200,10 +174,10 @@ def PjjcChangeTeamScript(team_lis_loc):
             cal.ClickInRandomArea(shengxu_loc, DELAY[1], DELAY[0])
             cal.ClickInRandomArea(hujiao_lis[0], DELAY[1], DELAY[0])
 
-            if (cnt != 2):
-                cal.ClickInRandomArea(team_lis_loc[3], DELAY[1], DELAY[0])
-                cal.ClickInRandomArea(shengxu_loc, DELAY[1], DELAY[0])
-                cal.ClickInRandomArea(myteam_guanbi, DELAY[1], DELAY[0])
+            #if (cnt != 2):
+            cal.ClickInRandomArea(team_lis_loc[3], DELAY[1], DELAY[0])
+            cal.ClickInRandomArea(shengxu_loc, DELAY[1], DELAY[0])
+            cal.ClickInRandomArea(myteam_guanbi, DELAY[1], DELAY[0])
         
         if (team_index >= 0):
             cal.ClickInRandomArea(team_lis_loc[team_index], DELAY[1], DELAY[0])
