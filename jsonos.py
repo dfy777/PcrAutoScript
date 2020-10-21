@@ -1,10 +1,13 @@
 import json
 import os
 
-LOCATION_JSON_PATH = "location.json"
+LOCATION_JSON_PATH = ".\sources\location.json"
+LOC_MAPPING_1_PATH = ".\sources\locmapping_1.json"
+LOC_MAPPING_2_PATH = ".\sources\locmapping_2.json"
 
-def ReadJson(name=False):
-    with open(LOCATION_JSON_PATH, "r") as load_f:
+
+def ReadJson(name=False, path=LOCATION_JSON_PATH):
+    with open(path, "r") as load_f:
         load_dict = json.load(load_f)
         if (name):
             return load_dict[name]

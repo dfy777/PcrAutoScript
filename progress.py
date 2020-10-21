@@ -1,5 +1,4 @@
 import cal
-import time
 import jsonos as jsos
 from configparser import ConfigParser
 

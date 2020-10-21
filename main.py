@@ -1,19 +1,15 @@
+import json
 import time
-import os
 
+import jsonos as jsos
 import cal
 import connect as cn
-import jsonos as jsos
 import progress as pg
-import calculateloc as cloc
-from configparser import ConfigParser
 
 
 if __name__ == "__main__":
-    
-    #cloc.CalculateLoc_Test()
 
-    active = True
+    active = False
     while active:
         print("请输入指令")
         print("start开始脚本\nquit结束脚本")
