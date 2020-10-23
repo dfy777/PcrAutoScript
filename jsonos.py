@@ -1,5 +1,5 @@
+#-*- coding: UTF-8-*-
 import json
-import os
 
 LOCATION_JSON_PATH = ".\sources\location.json"
 LOC_MAPPING_1_PATH = ".\sources\locmapping_1.json"

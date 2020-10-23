@@ -1,9 +1,10 @@
+#-*- coding: UTF-8-*-
 import os
-import time
 import random
+import time
+from configparser import ConfigParser
 
 import imghandle
-from configparser import ConfigParser
 
 cf = ConfigParser()
 cf.read('config.ini', encoding='utf-8')
@@ -15,19 +16,18 @@ DEFAULT_NAME = cf_map['defaultname']
 
 class AdbController:
     def __init__(self):
-        #self.imgHdl = imghandle.ImgHandle()
+        self.__imgHdl = imghandle.ImgHandle()
         pass
 
-    def ClickByPoint(self, location, delay_const=DELAY, delay_random=DELAY):
+    def ClickByPoint(self, location, const_delay=DELAY, random_delay=DELAY):
         cmd_tap = 'adb_server shell input tap {} {}'.format(
                     str(location[0]), str(location[1]))
 
         os.system(cmd_tap)
-        time.sleep(self.__GetRandomTime(delay_const, delay_random))
+        time.sleep(self.__GetRandomTime(const_delay, random_delay))
 
 
-    def ClickInRandomArea(self, location, delay_const=DELAY, delay_random=DELAY):
-        
+    def ClickInRandomArea(self, location, const_delay=DELAY, random_delay=DELAY):
         ptx, pty, inc_x, inc_y = location[:4]
         #避免取到边界点
         x = random.randint(ptx + BORDER_PIXCEL, 
@@ -37,34 +37,36 @@ class AdbController:
 
         cmd_tap = 'adb_server shell input tap {} {}'.format(str(x), str(y))
         os.system(cmd_tap)
-        time.sleep(self.__GetRandomTime(delay_const, delay_random))
+        time.sleep(self.__GetRandomTime(const_delay, random_delay))
 
 
-    def ClickByTemplate(self, name, delay_const=DELAY, delay_random=DELAY):
+    def ClickMultipleTimes(self, location, times, const_delay=DELAY, random_delay=DELAY):
+        ptx, pty, inc_x, inc_y = location[:4]
+        #避免取到边界点
+        x = random.randint(ptx + 15, ptx + inc_x - 15)
+        y = random.randint(pty + 15, pty + inc_y - 15)
+        
+        loc_range = (x - 15, y - 15, 15 * 2, 15 * 2)
+
+        for cnt in range(times):
+            self.ClickInRandomArea(loc_range, const_delay, random_delay)
+
+
+    def ClickByTemplate(self, name, const_delay=DELAY, random_delay=DELAY):
         self.ScreenShot(DEFAULT_NAME)
-        loc = self.GetLocationByImageName(DEFAULT_NAME, name)
+        loc = self.__imgHdl.GetLocationByImageName(DEFAULT_NAME, name)
         if (loc):
-            self.ClickInRandomArea(loc, delay_const, delay_random)
+            self.ClickInRandomArea(loc, const_delay, random_delay)
 
 
-    def ScreenShot(self, name="screencap"):
+    def ScreenShot(self, name=DEFAULT_NAME):
         cmd_cap = 'adb_server shell screencap -p /sdcard/{}.png'.format(name)
         cmd_pull = 'adb_server pull sdcard/{}.png C:\Projects\PcrArenaDefend\sources'.format(name)
 
         os.system(cmd_cap)
         os.system(cmd_pull)
-        it = self.__GetRandomTime(DELAY*3)
-        time.sleep(it)    
+        time.sleep(self.__GetRandomTime(const=1, delay=0))    
 
 
     def __GetRandomTime(self, const, delay=0):
         return const + random.random() * delay
-
-
-    def __GetRandomList(self, rd_list):
-        random.shuffle(rd_list)
-        return rd_list
-
-    def __GetRadomInt(self, rd_int):
-        rd_int = random.randint(0, rd_int-1)
-        return rd_int

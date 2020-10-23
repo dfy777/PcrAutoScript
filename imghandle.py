@@ -1,5 +1,7 @@
-import cv2
+#-*- coding: UTF-8-*-
 import test
+
+import cv2
 
 
 class ImgHandle:
@@ -65,3 +67,23 @@ class ImgHandle:
         #sort by y coordinates
         loc_lis.sort(key=lambda x:x[1])
         return loc_lis
+
+    '''
+    判断一张图片是否为纯色
+    是纯色返回True
+    '''
+    def CheckIsBrokenImg(self, name) -> bool:
+        img = cv2.imread('.\sources\{}.png'.format(name))
+
+        py, px = img.shape[:2]
+        num_lis = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+        result = True
+        img_color = img[int(py*0.1), int(px*0.1)]
+
+        for it in num_lis:
+            #print(img[int(py*it), int(px*it)])
+            if (img_color != img[int(py*it), int(px*it)]).all():
+                result = False
+                break
+
+        return result

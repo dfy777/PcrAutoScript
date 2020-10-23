@@ -1,3 +1,4 @@
+#-*- coding: UTF-8-*-
 class UnfindSimulatorException(Exception):
     def __init__(self, ErrorInfo):
         self.errorinfo = ErrorInfo

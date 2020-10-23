@@ -1,15 +1,20 @@
-import json
+#-*- coding: UTF-8-*-
+import test
 import time
+import random
 
-import jsonos as jsos
-import cal
+import autod
 import connect as cn
-import progress as pg
-
 
 if __name__ == "__main__":
 
-    active = False
+    """ time.sleep(2)
+    at = autod.AutoD()
+    at.Start() """
+
+    at = autod.AutoD()
+
+    active = True
     while active:
         print("请输入指令")
         print("start开始脚本\nquit结束脚本")
@@ -20,8 +25,8 @@ if __name__ == "__main__":
             print("输入ctrl+C停止程序")
             consis = True
             while(consis):
-                time.sleep(cal.GetRandomTime(0, 10))
-                pg.Start()
+                time.sleep(random.random() * 10)
+                at.Start()
         elif msg == "quit":
             active = False
 

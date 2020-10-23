@@ -3,7 +3,6 @@
 import time
 import subprocess as subp
 import myexcept as myex
-import chardet
 
 from configparser import ConfigParser
 
