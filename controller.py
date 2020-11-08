@@ -3,6 +3,7 @@ import random
 from configparser import ConfigParser
 
 import adbcontroller
+from adbcontroller import AdbController
 import imghandle
 import jsonos as jsos
 
@@ -24,9 +25,9 @@ class Controller:
         self.__mappingLis = jsos.ReadJson(False, jsos.LOC_MAPPING_2_PATH)
         self.__tmpLoc = False
 
-        for key in self.__imgLocDict:
-            self.__imgLocDict[key][0] = -1
-        self.__imgLocDict["avator-cancel"][0] = 659
+        #for key in self.__imgLocDict:
+        #    self.__imgLocDict[key][0] = -1
+        #self.__imgLocDict["avator-cancel"][0] = 659
 
     def LocInjection(self, template_name, img_name=adbcontroller.DEFAULT_NAME) -> None:
         self.__tmpLoc = False
@@ -73,6 +74,9 @@ class Controller:
     def ContinousClick(self, name, times, const_delay=DELAY[1], random_delay=DELAY[0]):
         self.__adbCtrl.ClickMultipleTimes(self.__imgLocDict[name], 
                                             times, const_delay, random_delay)
+
+    def Swipe(self, startp, endp, const_delay=DELAY[1], random_delay=DELAY[0]):
+        self.__adbCtrl.SwipeScreen(startp, endp, const_delay, random_delay)
     
 
     def ScreenShot(self, name=adbcontroller.DEFAULT_NAME):
@@ -86,6 +90,12 @@ class Controller:
             else:
                 break
 
+    def CheckImgLoc(self, name) ->bool:
+        if (self.__imgHdl.GetLocationByImageName(adbcontroller.DEFAULT_NAME, name)):
+            return True
+        else:
+            return False
+            
 
     def GetRandomList(self, rd_list):
         random.shuffle(rd_list)
@@ -95,6 +105,13 @@ class Controller:
         rd_int = random.randint(0, rd_int-1)
         return rd_int
 
+    def GetRandomLoc(self, area):
+        rd_x = random.randint(area[0], area[0] + area[2])
+        rd_y = random.randint(area[1], area[1] + area[3])
+        return (rd_x, rd_y)
+
+    def GetLocationByName(self, name):
+        return self.__imgLocDict[name]
 
     def PrintImgLocDict(self):
         for key in self.__imgLocDict:

@@ -14,13 +14,17 @@ BORDER_PIXCEL = int(cf_map['borderpixel'])
 DELAY = float(cf_map['delay'])
 DEFAULT_NAME = cf_map['defaultname']
 
+cf_map = dict(cf.items('connect'))
+ADB_SERVER = cf_map['adbserver']
+
+
 class AdbController:
     def __init__(self):
         self.__imgHdl = imghandle.ImgHandle()
         pass
 
     def ClickByPoint(self, location, const_delay=DELAY, random_delay=DELAY):
-        cmd_tap = 'adb_server shell input tap {} {}'.format(
+        cmd_tap = '{} shell input tap {} {}'.format(ADB_SERVER,
                     str(location[0]), str(location[1]))
 
         os.system(cmd_tap)
@@ -35,7 +39,7 @@ class AdbController:
         y = random.randint(pty + BORDER_PIXCEL,
                                 pty + inc_y - BORDER_PIXCEL)
 
-        cmd_tap = 'adb_server shell input tap {} {}'.format(str(x), str(y))
+        cmd_tap = '{} shell input tap {} {}'.format(ADB_SERVER, str(x), str(y))
         os.system(cmd_tap)
         time.sleep(self.__GetRandomTime(const_delay, random_delay))
 
@@ -58,10 +62,19 @@ class AdbController:
         if (loc):
             self.ClickInRandomArea(loc, const_delay, random_delay)
 
+    def SwipeScreen(self, startp, endp, const_delay=DELAY, random_delay=DELAY):
+        startx, starty = startp[:2]
+        endx, endy = endp[:2]
+
+        cmd_tap = '{} shell input swipe {} {} {} {} 2000'.format(ADB_SERVER,
+                                str(startx), str(starty),str(endx), str(endy))
+        os.system(cmd_tap)
+        time.sleep(self.__GetRandomTime(const_delay, random_delay))
+
 
     def ScreenShot(self, name=DEFAULT_NAME):
-        cmd_cap = 'adb_server shell screencap -p /sdcard/{}.png'.format(name)
-        cmd_pull = 'adb_server pull sdcard/{}.png C:\Projects\PcrArenaDefend\sources'.format(name)
+        cmd_cap = '{} shell screencap -p /sdcard/{}.png'.format(ADB_SERVER, name)
+        cmd_pull = '{} pull sdcard/{}.png .\sources'.format(ADB_SERVER, name)
 
         os.system(cmd_cap)
         os.system(cmd_pull)

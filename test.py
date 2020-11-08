@@ -30,11 +30,19 @@ def ShowImageMatchPoint(img, location, name="img_show"):
     cv2.imshow(name, img_show)
     cv2.waitKey(0)
 
+def ShowLinesOnImg(img, start, end, name="img_show"):
+    img_show = cv2.line(img, start, end, (0, 0, 255), 2)
+
+    cv2.imshow(name, img_show)
+    cv2.waitKey(0)
 
 
-def ControllerTest():
-    #ctrl = controller.Controller()
-    #ctrl.PrintDict()
-    #at = autod.AutoD()
-    #at.Start()
-    pass
+def ShowImageMatchPointByName(img_name, location):
+    img = cv2.imread('.\sources\{}.png'.format(img_name))
+
+    ShowImageMatchPoint(img, location, name=img_name)
+
+
+def ShowLinesOnImgByName(img_name, start, end):
+    img = cv2.imread('.\sources\{}.png'.format(img_name))
+    ShowLinesOnImg(img, start, end, img_name)
