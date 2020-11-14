@@ -8,6 +8,9 @@ class CalculateLoc:
     def __init__(self) -> None:
         self.__imgHdl = imghandle.ImgHandle()
 
+    '''
+    根据1 2 3 三张图片计算所有模板位置
+    '''
     def Calculate(self):
         js_dict = {}
 

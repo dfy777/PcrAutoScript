@@ -30,6 +30,10 @@ def ShowImageMatchPoint(img, location, name="img_show"):
     cv2.imshow(name, img_show)
     cv2.waitKey(0)
 
+
+'''
+根据起始点在原图显示直线
+'''
 def ShowLinesOnImg(img, start, end, name="img_show"):
     img_show = cv2.line(img, start, end, (0, 0, 255), 2)
 

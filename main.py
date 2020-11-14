@@ -31,9 +31,6 @@ if __name__ == "__main__":
     at.Start() """
 
     at = autod.AutoD()
-    #at.SelectMyTeam()
-
-    #print(at.InitSleepTime())
 
     active = True
     while active:

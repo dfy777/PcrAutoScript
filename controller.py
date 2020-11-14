@@ -29,6 +29,9 @@ class Controller:
         #    self.__imgLocDict[key][0] = -1
         #self.__imgLocDict["avator-cancel"][0] = 659
 
+    '''
+    记录模板的坐标位置
+    '''
     def LocInjection(self, template_name, img_name=adbcontroller.DEFAULT_NAME) -> None:
         self.__tmpLoc = False
 
@@ -71,6 +74,9 @@ class Controller:
         self.__adbCtrl.ClickInRandomArea(self.__imgLocDict[name], const_delay, random_delay)
 
 
+    '''
+    连点
+    '''
     def ContinousClick(self, name, times, const_delay=DELAY[1], random_delay=DELAY[0]):
         self.__adbCtrl.ClickMultipleTimes(self.__imgLocDict[name], 
                                             times, const_delay, random_delay)
@@ -105,6 +111,9 @@ class Controller:
         rd_int = random.randint(0, rd_int-1)
         return rd_int
 
+    '''
+    在给定区域中随机产生一个点坐标
+    '''
     def GetRandomLoc(self, area):
         rd_x = random.randint(area[0], area[0] + area[2])
         rd_y = random.randint(area[1], area[1] + area[3])

@@ -42,11 +42,13 @@ class AutoD:
 
     def Start(self) -> None:
         #=============mainpage=================
-        self.__MainPageInit()
+        if not self.__isInit:
+            self.__MainPageInit()
         self.ctrl.Click("fangyusheding", DELAY[2], DELAY[1])
 
         #========change team page==============
-        self.__ChangeTeamPageInit()
+        if not self.__isInit:
+            self.__ChangeTeamPageInit()
         for page in range(3):
             #self.ctrl.Click("avator-cancel", 0.1, 0.1)
             self.ctrl.ContinousClick("avator-cancel", 5, 0.4, 0.2)
@@ -58,14 +60,17 @@ class AutoD:
                 self.ctrl.Click("wodeduiwu", DELAY[1], DELAY[0])
 
         #===========choose myteam page============
-        self.__MyteamPageInit()
+        if not self.__isInit:
+            self.__MyteamPageInit()
         
         team_randomid, team_randomlis = self.__GetRandomTeam()
         team_name = "myteam-" + str(team_randomid)
 
-        self.ctrl.ScreenShot()
-        if (not self.ctrl.CheckImgLoc("shengxu")):
-            self.ctrl.Click("shengxu", DELAY[1], DELAY[0])
+    
+        if not self.__isInit:
+            self.ctrl.ScreenShot()
+            if (not self.ctrl.CheckImgLoc("shengxu")):
+                self.ctrl.Click("shengxu", DELAY[1], DELAY[0])
 
         for cnt in range(3):
             self.ctrl.Click(team_name, DELAY[1], DELAY[0])
@@ -89,6 +94,8 @@ class AutoD:
 
         self.ctrl.Click("team-config-page-3", DELAY[1], DELAY[0])
         self.ctrl.Click("team-config-next-1", DELAY[1], DELAY[0])
+
+        self.__isInit = True
 
 
     def __MainPageInit(self):
