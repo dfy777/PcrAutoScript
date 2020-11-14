@@ -1,7 +1,7 @@
-import cal
-import time
-import jsonos as jsos
 from configparser import ConfigParser
+
+import cal
+import jsonos as jsos
 
 cf = ConfigParser()
 cf.read('config.ini',encoding='utf-8')
