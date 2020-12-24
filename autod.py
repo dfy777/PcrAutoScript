@@ -14,9 +14,13 @@ cf_map = dict(cf.items('progress'))
 IS_MATCH_IMAGE_BYLOC = cf_map['ismatchimagebyloc'] != "false"
 IS_RECORD_LOC = cf_map['isrecordloc'] != "false"
 TEAM_NUM = int(cf_map['teamnum'])
+TEAM_LIST_ID = list(map(int, cf_map['teamlistid'].replace(' ', '').split(",")))
 DELAY = list(map(float, cf_map['delaylist'].replace(' ', '').split(",")))
 CHANGE_TIME = int(cf_map['changetime'])
 IS_RANDOM_CHANGE_TIME = cf_map['israndomchangetime'] != "false"
+IS_REPEAT_TEAM = cf_map['isrepeatteam'] != "false"
+
+print(TEAM_LIST_ID)
 
 DEFAULT_TIME = 2
 
@@ -44,6 +48,9 @@ class AutoD:
         #=============mainpage=================
         if not self.__isInit:
             self.__MainPageInit()
+        self.ctrl.Click("fangyusheding", DELAY[2], DELAY[1])
+
+        #按两次防止遇到connecting 卡住
         self.ctrl.Click("fangyusheding", DELAY[2], DELAY[1])
 
         #========change team page==============
@@ -125,6 +132,9 @@ class AutoD:
         rdlis = self.ctrl.GetRandomList( [1, 2, 3] )
         rdid = 1 + self.ctrl.GetRadomInt(3)
 
+        while not rdid + 2 in TEAM_LIST_ID:
+                rdid = 1 + self.ctrl.GetRadomInt(3)
+
         #避免换队和上次重复的问题
         while(True):
             if (not self.__lastTeamLog):
@@ -139,6 +149,8 @@ class AutoD:
             if flag:
                 rdlis = self.ctrl.GetRandomList( [1, 2, 3] )
                 rdid = 1 + self.ctrl.GetRadomInt(3)
+                while not rdid + 2 in TEAM_LIST_ID:
+                    rdid = 1 + self.ctrl.GetRadomInt(3)
             else:
                 break
             
