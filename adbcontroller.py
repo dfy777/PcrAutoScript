@@ -21,7 +21,6 @@ ADB_SERVER = cf_map['adbserver']
 class AdbController:
     def __init__(self):
         self.__imgHdl = imghandle.ImgHandle()
-        pass
     
     '''
     点击给定的坐标位置

@@ -19,8 +19,9 @@ DELAY = list(map(float, cf_map['delaylist'].replace(' ', '').split(",")))
 CHANGE_TIME = int(cf_map['changetime'])
 IS_RANDOM_CHANGE_TIME = cf_map['israndomchangetime'] != "false"
 IS_REPEAT_TEAM = cf_map['isrepeatteam'] != "false"
+SHUT_DOWN_TIME = int(cf_map['shutdowntime'])
 
-print(TEAM_LIST_ID)
+#print(TEAM_LIST_ID)
 
 DEFAULT_TIME = 2
 
@@ -43,6 +44,11 @@ class AutoD:
             tim += CHANGE_TIME
         return tim
 
+    def GetShutDownTime(self) -> int:
+        sdtime = SHUT_DOWN_TIME
+        if sdtime <= 0:
+            sdtime = 0
+        return sdtime
 
     def Start(self) -> None:
         #=============mainpage=================
